@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with your actual secret key
+app.secret_key = 'your_secret_key'  
 
-# Define your questions and their correct answers
 questions = [
     {
         "question": "What is the most popular Python library for AI development?",
@@ -32,17 +31,14 @@ questions = [
     }
 ]
 
-# Define the quiz route
 @app.route("/", methods=["GET", "POST"])
 def quiz():
     if request.method == "POST":
         user_answers = []
         for i in range(len(questions)):
-            # Fetch the answer for each question using the dynamic name (e.g., question_1, question_2)
             selected_answer = request.form.get(f"question_{i}")
             user_answers.append(selected_answer)
 
-        # Calculate the score
         score = sum(1 for i, q in enumerate(questions) if user_answers[i] == q['answer'])
         session['score'] = score
 
@@ -53,9 +49,8 @@ def quiz():
 
     best_score = session.get('best_score', 0)
     total_questions = len(questions)
-    return render_template('quiz.html', questions=questions, best_score=best_score, total_questions=total_questions,enumerate=enumerate)
+    return render_template('quiz.html', questions=questions, best_score=best_score, total_questions=total_questions, enumerate=enumerate)
 
-# Define the result route
 @app.route("/result")
 def result():
     score = session.get('score', 0)
