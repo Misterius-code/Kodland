@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            position: relative;
+            min-height: 100vh;
+        }
+        footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+        .best-score {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quiz</h1>
+    <form method="POST">
+        <!-- Loop through each question dynamically -->
+        {% for i, question in enumerate(questions) %}
+            <h2>{{ i+1 }}: {{ question.question }}</h2>
+
+            <!-- Loop through the options for each question -->
+            {% for option in question.options %}
+                <label>
+                    <!-- Unique name for each question group (e.g., question_1, question_2, etc.) -->
+                    <input type="radio" name="question_{{ i }}" value="{{ option }}" required> {{ option }}
+                </label><br>
+            {% endfor %}
+        {% endfor %}
+
+        <br>
+        <input type="submit" value="Submit Answers">
+    </form>
+
+    <div class="best-score">
+        <p>Best Score: {{ best_score }} / {{ total_questions }}</p>
+    </div>
+
+    <footer>
+        <p>Quiz created by Michal Aleksandrowicz</p>
+    </footer>
+</body>
+</html>
